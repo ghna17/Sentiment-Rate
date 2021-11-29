@@ -17,18 +17,30 @@ def cleanText(st):
 	newSt = newSt.replace("  ", " ")
 	return newSt
 
-def wordSent(sWord):
+def wordSent(sWord, textFile):
 	sWord = cleanText(sWord)
 	count = 0
 	rateSum = 0
-	inFile = open('training.txt')
+	inFile = open(textFile)
 	line = inFile.readline()
 	while line:
 		newSt = cleanText(line)
-		if sWord in newSt:
+		lineWords = newSt.split(" ")
+		if sWord in lineWords:
 			count += 1
 			rate = getSentRate(line)
 			rateSum += rate
 		line = inFile.readline()
-	sent = rateSum / count
-	return sent
+	if count > 0:
+		return (rateSum / count)
+	else:
+		return 0
+
+def textSent(st, textFile):
+	num = 0
+	rateSumTx = 0
+	for word in st.split():
+		num += 1
+		rate = wordSent(word, textFile)
+		rateSumTx += rate
+	return (round((rateSumTx / num), 2))
