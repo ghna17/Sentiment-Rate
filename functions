@@ -1,0 +1,34 @@
+def getSentRate(st):
+	newSt = int(st[0])
+	return newSt
+
+def getRevText(st):
+	newSt = st[2:]
+	return newSt
+
+def cleanText(st):
+	stCase = st.lower()
+	stStrip = stCase.strip(" ")
+	stStrip = stStrip.rstrip("\n")
+	newSt = ""
+	for char in stStrip:
+		if char.isalpha() or char == " ":
+			newSt += char
+	newSt = newSt.replace("  ", " ")
+	return newSt
+
+def wordSent(sWord):
+	sWord = cleanText(sWord)
+	count = 0
+	rateSum = 0
+	inFile = open('training.txt')
+	line = inFile.readline()
+	while line:
+		newSt = cleanText(line)
+		if sWord in newSt:
+			count += 1
+			rate = getSentRate(line)
+			rateSum += rate
+		line = inFile.readline()
+	sent = rateSum / count
+	return sent
